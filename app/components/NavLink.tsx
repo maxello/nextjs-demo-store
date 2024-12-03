@@ -1,7 +1,7 @@
 "use client";
 import { usePathname } from 'next/navigation';
 import React from 'react';
-import { LinkProp } from '/app/lib/definitions';
+import { LinkProp } from '@/app/lib/definitions';
 import Link from 'next/link';
 
 function classNames(...classes: string[]) {
