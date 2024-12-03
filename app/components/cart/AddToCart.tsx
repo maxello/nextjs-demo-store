@@ -5,8 +5,9 @@ import { QueryResultRow } from '@vercel/postgres';
 import { addItem } from '@/app/redux/features/cart/cartSlice';
 import { useAppDispatch } from '@/app/redux/hooks';
 import Button from '@/app/components/Button';
+import { Product } from '@/app/lib/definitions';
 
-export default function AddToCart({product}: {product: QueryResultRow}) {
+export default function AddToCart({product}: {product: Product}) {
   const dispatch = useAppDispatch();
   const [isProductAdded, setIsProductAdded] = useState(false);
   
@@ -20,8 +21,8 @@ export default function AddToCart({product}: {product: QueryResultRow}) {
     [isProductAdded]
   );
 
-  const addProductToCart = (product: QueryResultRow, quantity: number) => {
-    dispatch(addItem({...product, quantity, created_at: product.created_at.toJSON()}));
+  const addProductToCart = (product: Product, quantity: number) => {
+    dispatch(addItem({...product, quantity, created_at: product.created_at.toString()}));
     setIsProductAdded(true);
   }
 

@@ -5,7 +5,7 @@ import AddToCart from "@/app/components/cart/AddToCart";
 import { Product } from '@/app/lib/definitions';
 import { QueryResultRow } from '@vercel/postgres';
 
-export default function ProductItem({product}: {product: QueryResultRow}) {
+export default function ProductItem({product}: {product: Product}) {
   return (
     <div className="relative group flex flex-col">
       <Link href={`/products/${product.id}`} className="block overflow-hidden rounded-t-md border border-gray-200">

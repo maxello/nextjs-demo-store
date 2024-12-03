@@ -6,7 +6,7 @@ export type Product = {
   thumbnail: string;
   images: string[];
   created_at: string;
-  quantity?: number;
+  quantity: number;
 }
 
 export type CartStateProp = {

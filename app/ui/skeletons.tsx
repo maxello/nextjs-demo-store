@@ -27,7 +27,7 @@ export function ProductItemSkeleton() {
 export function ProductsSkeleton({amount = 8}: {amount?: number}) {
   return (
     <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 mb-6 lg:mb-12">
-      {Array(amount).fill(true, 0, amount).map(() => (<ProductItemSkeleton />))}
+      {Array(amount).fill(true, 0, amount).map((item, ind) => (<ProductItemSkeleton key={ind} />))}
     </div>
   )
 }
