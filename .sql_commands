@@ -1,0 +1,18 @@
+# Creating of the products table
+CREATE TABLE products (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    title VARCHAR(255),
+    price NUMERIC,
+    brand VARCHAR(255),
+    thumbnail TEXT,
+    images TEXT[]
+    created_at DATE DEFAULT CURRENT_DATE
+);
+
+# Creating of several dummy products
+INSERT INTO products (title, price, brand, thumbnail, images)
+VALUES 
+    ('Essence Mascara Lash Princess', 9.99, 'Essence', 'https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png', 
+      ARRAY['https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/1.png']),
+    ('Eyeshadow Palette with Mirror', 19.99, 'Glamour Beauty', 'https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/thumbnail.png',
+      ARRAY['https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/1.png']);
