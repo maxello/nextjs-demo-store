@@ -2,7 +2,6 @@
 import { fetchProducts } from '@/app/lib/data';
 import ProductItem from "./ProductItem";
 import { Product } from '@/app/lib/definitions';
-import { QueryResultRow } from '@vercel/postgres';
 
 export default async function ProductsList({amount}: {amount?: number}) {
   const data: {products: Product[], total_count: number} = await fetchProducts(amount);

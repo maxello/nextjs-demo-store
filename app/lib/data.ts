@@ -30,7 +30,8 @@ export async function fetchProducts(limit?: number, offset?: number) {
     ]);
 
     const products: Product[] = data[0].rows.map((row: any) => ({
-      ...row
+      ...row,
+      price: parseFloat(row.price)
     }));
 
     return {

@@ -5,9 +5,16 @@ import { useSelector } from 'react-redux';
 import CartItem from './CartItem';
 import Link from 'next/link';
 import { useAppDispatch } from '@/app/redux/hooks';
+import { changeQuantity } from '@/app/redux/features/cart/cartSlice';
 
-export default function CartModal({isOpen, setModalVisibility}: {isOpen: boolean, setModalVisibility: (arg?: boolean) => void}) {
+export default function CartModal({ isOpen, setModalVisibility }: { isOpen: boolean, setModalVisibility: (arg?: boolean) => void }) {
   const products = useSelector((state: CartStateProp) => state.cart.items);
+  const subtotal = useSelector((state: CartStateProp) => state.cart.subtotal);
+  const dispatch = useAppDispatch();
+  const handleQuantity = (flag: 'minus' | 'plus', id: string) => {
+    dispatch(changeQuantity({flag, id}));
+  }
+
   return (
     <Dialog open={isOpen} onClose={() => setModalVisibility()} className="relative z-10">
       <DialogBackdrop
@@ -40,43 +47,51 @@ export default function CartModal({isOpen, setModalVisibility}: {isOpen: boolean
                   </div>
 
                   <div className="mt-8">
-                    <div className="flow-root">
-                      <ul role="list" className="-my-6 divide-y divide-gray-200">
-                        {products.map((product: Product) => (
-                          <CartItem key={product.id} item={product} />
-                        ))}
-                      </ul>
-                    </div>
+                    {products.length > 0 ? (
+                      <div className="flow-root">
+                        <ul role="list" className="-my-6 divide-y divide-gray-200">
+                          {products.map((product: Product) => (
+                            <CartItem key={product.id} item={product} onChangeQuantity={handleQuantity} />
+                          ))}
+                        </ul>
+                      </div>
+                    ) : (
+                      <div className="text-center text-gray-400">Your cart is empty</div>
+                    )}
                   </div>
                 </div>
 
                 <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                   <div className="flex justify-between text-base font-medium text-gray-900">
                     <p>Subtotal</p>
-                    <p>$262.00</p>
+                    <p>${subtotal.toFixed(2)}</p>
                   </div>
                   <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
-                  <div className="mt-6">
-                    <Link
-                      href="/checkout"
-                      className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 transition-colors px-6 py-3 text-base font-medium text-white shadow-sm lg:hover:bg-indigo-700"
-                    >
-                      Checkout
-                    </Link>
-                  </div>
-                  <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
-                    <p>
-                      or{' '}
-                      <button
-                        type="button"
-                        onClick={() => setModalVisibility()}
-                        className="font-medium transition-colors text-indigo-600 hover:text-indigo-700"
-                      >
-                        Continue Shopping
-                        <span aria-hidden="true"> &rarr;</span>
-                      </button>
-                    </p>
-                  </div>
+                  {products.length > 0 && (
+                    <>
+                      <div className="mt-6">
+                        <Link
+                          href="/checkout"
+                          className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 transition-colors px-6 py-3 text-base font-medium text-white shadow-sm lg:hover:bg-indigo-700"
+                        >
+                          Checkout
+                        </Link>
+                      </div>
+                      <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
+                        <p>
+                          or{' '}
+                          <button
+                            type="button"
+                            onClick={() => setModalVisibility()}
+                            className="font-medium transition-colors text-indigo-600 hover:text-indigo-700"
+                          >
+                            Continue Shopping
+                            <span aria-hidden="true"> &rarr;</span>
+                          </button>
+                        </p>
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </DialogPanel>

@@ -1,23 +1,27 @@
-import { Product } from "@/app/lib/definitions";
+import { Product, CartProps } from "@/app/lib/definitions";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-type stateProp = {
-  items: Product[],
-  isOpen: boolean,
-  totalAmount: number;
+
+const calculateTotalAmount = (state: CartProps) => {
+  return state.items.reduce((accumulator, currentValue) => accumulator + currentValue.quantity, 0);
 }
+
+const caclulateSubtotal = (state: CartProps) => {
+  return Number(state.items.reduce((accumulator, currentValue) => accumulator + currentValue.price * currentValue.quantity, 0).toFixed(2));
+}
+
 export const cartSlice = createSlice({
   name: "cart",
   initialState: { 
     isOpen: false,
     items: [],
-    totalAmount: 0 
+    totalAmount: 0,
+    subtotal: 0
   },
   reducers: {
-    setModalVisibility: (state: stateProp, action: PayloadAction<boolean>) => {
+    setModalVisibility: (state: CartProps, action: PayloadAction<boolean>) => {
       state.isOpen = action.payload;
     },
-    addItem: (state: stateProp, action: PayloadAction<Product>) => {
-      console.log("PRODUCT ADDED: ", action.payload);
+    addItem: (state: CartProps, action: PayloadAction<Product>) => {
       if (state.totalAmount == 0) {
         state.items.push({...action.payload, quantity: 1});
       } else {
@@ -32,20 +36,34 @@ export const cartSlice = createSlice({
           state.items.push({...action.payload, quantity: 1});
         }
       }
-      state.totalAmount = state.totalAmount + 1;
+      state.totalAmount = calculateTotalAmount(state);
+      state.subtotal = caclulateSubtotal(state);
     },
-    // removeItem: (state, action: PayloadAction) => {
-    //   const item = state.items.find((item: Product) => item.id === action.payload.id);
-    //   if (item.quantity <= 1) {
-    //     state.items.filter((item: Product) => item.id !== action.payload.id);
-    //   } else {
-    //     item.quantity = item.quantity - 1;
-    //   }
-    // },
-    // clearCart: (state) => {
-    //   state.items = [];
-    // }
+    changeQuantity: (state: CartProps, action: PayloadAction<{id: string, flag: string}>) => {
+      const item = state.items.find((item: Product) => item.id === action.payload.id);
+      if (item) {
+        if (action.payload.flag === 'minus') {
+          if (item) {
+            if (item.quantity <= 1) {
+              state.items = state.items.filter((item: Product) => item.id !== action.payload.id);
+            } else {
+              item.quantity = item.quantity - 1;
+            }
+          }
+        }
+        if (action.payload.flag === 'plus') {
+          item.quantity = item.quantity + 1;
+        }
+      }
+      state.totalAmount = calculateTotalAmount(state);
+      state.subtotal = caclulateSubtotal(state);
+    },
+    clearCart: (state: CartProps) => {
+      state.items = [];
+      state.totalAmount = calculateTotalAmount(state);
+      state.subtotal = caclulateSubtotal(state);
+    }
   },
 });
-export const { setModalVisibility, addItem } = cartSlice.actions;
+export const { setModalVisibility, addItem, changeQuantity, clearCart } = cartSlice.actions;
 export default cartSlice.reducer;
