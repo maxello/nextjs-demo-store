@@ -1,4 +1,4 @@
-import { Product, CartProps, StateProps } from "@/app/lib/definitions";
+import { Product, CartProps } from "@/app/lib/definitions";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const calculateTotalAmount = (state: CartProps) => {

@@ -14,7 +14,7 @@ export default function ProductItem({product}: {product: Product}) {
           src={product.thumbnail}
           width={300}
           height={300}
-          className="aspect-square w-full bg-gray-200 transition-transform duration-[2.5s] ease-linear lg:hover:scale-110 object-cover"
+          className="aspect-square w-full bg-gray-200 transition-transform duration-[2.5s] ease-linear lg:hover:scale-110 object-contain"
         />
       </Link>
       <div className="border border-gray-200 border-t-0 p-4 rounded-b-md grow flex flex-col justify-between">
