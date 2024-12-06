@@ -1,5 +1,4 @@
 export type Product = {
-  // rows: any;
   id: string;
   title: string;
   price: number,
@@ -11,17 +10,21 @@ export type Product = {
 }
 
 export type CartProps = {
-  items: Product[],
-  isOpen: boolean,
+  items: Product[];
+  isOpen: boolean;
   totalAmount: number;
   subtotal: number;
 }
 
-export type CartStateProp = {
-  cart: CartProps
+export type StateProps = {
+  cart: CartProps;
 }
 
 export type LinkProp = {
   name: string;
   href: string;
+}
+export type actionProps = {
+  type: string;
+  payload: CartProps;
 }

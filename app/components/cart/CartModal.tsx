@@ -1,6 +1,6 @@
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import { Product, CartStateProp } from '@/app/lib/definitions';
+import { Product, StateProps } from '@/app/lib/definitions';
 import { useSelector } from 'react-redux';
 import CartItem from './CartItem';
 import Link from 'next/link';
@@ -8,8 +8,8 @@ import { useAppDispatch } from '@/app/redux/hooks';
 import { changeQuantity } from '@/app/redux/features/cart/cartSlice';
 
 export default function CartModal({ isOpen, setModalVisibility }: { isOpen: boolean, setModalVisibility: (arg?: boolean) => void }) {
-  const products = useSelector((state: CartStateProp) => state.cart.items);
-  const subtotal = useSelector((state: CartStateProp) => state.cart.subtotal);
+  const products = useSelector((state: StateProps) => state.cart.items);
+  const subtotal = useSelector((state: StateProps) => state.cart.subtotal);
   const dispatch = useAppDispatch();
   const handleQuantity = (flag: 'minus' | 'plus', id: string) => {
     dispatch(changeQuantity({flag, id}));

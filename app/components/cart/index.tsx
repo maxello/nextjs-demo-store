@@ -4,14 +4,12 @@ import React, { useEffect, useState } from 'react';
 import { ShoppingBagIcon } from '@heroicons/react/24/outline';
 import ModalCart from '@/app/components/cart/CartModal';
 import { useAppDispatch, useAppSelector } from '@/app/redux/hooks';
-import { setModalVisibility } from '@/app/redux/features/cart/cartSlice';
-import { CartStateProp } from '@/app/lib/definitions';
+import { setCart, setModalVisibility } from '@/app/redux/features/cart/cartSlice';
+import { StateProps } from '@/app/lib/definitions';
 import { usePathname } from 'next/navigation';
 
 export default function Cart() {
-
-  const isOpen = useAppSelector((state: CartStateProp) => state.cart.isOpen);
-  const totalAmount = useAppSelector((state: CartStateProp) => state.cart.totalAmount);
+  const cart = useAppSelector((state: StateProps) => state.cart);
   const dispatch = useAppDispatch();
   const pathname = usePathname();
   const [isProductAdded, setIsProductAdded] = useState(false);
@@ -20,8 +18,13 @@ export default function Cart() {
   }
 
   useEffect(() => {
-    isOpen && updateModalVisibility(false);
+    cart?.isOpen && updateModalVisibility(false);
   }, [pathname]);
+
+  useEffect(() => {
+    const result = JSON.parse(localStorage.getItem("cart") || '[]');
+    dispatch(setCart(result));
+  }, []);
 
   const duration = 300;
   useEffect(
@@ -32,7 +35,7 @@ export default function Cart() {
         clearTimeout(timer);
       };
     },
-    [totalAmount]
+    [cart?.totalAmount]
   );
 
   return (
@@ -46,13 +49,13 @@ export default function Cart() {
         <span className="absolute -inset-1.5" />
         <span className="sr-only">View notifications</span>
         <ShoppingBagIcon aria-hidden="true" className="size-6" />
-        {totalAmount > 0 && (
+        {cart?.totalAmount > 0 && (
           <span className={`absolute duration-${duration} ease-linear transition-transform flex justify-center items-center -top-1 -right-1 rounded-full w-5 h-5 bg-rose-500 text-white text-[0.7rem]${isProductAdded ? ' scale-125': ''}`}>
-            {totalAmount}
+            {cart?.totalAmount}
           </span>
         )}
       </button>
-      <ModalCart isOpen={isOpen} setModalVisibility={updateModalVisibility} />
+      <ModalCart isOpen={cart?.isOpen} setModalVisibility={updateModalVisibility} />
     </>
   )
 }
