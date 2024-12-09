@@ -45,12 +45,11 @@ export async function fetchProductById(id: string) {
   try {
     // Artificially delay a response for demo purposes.
     // Don't do this in production :)
-    console.log('Fetching product data by ID......');
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    // console.log('Fetching product data by ID......');
+    // await new Promise((resolve) => setTimeout(resolve, 3000));
 
     const response = await sql
     `SELECT * FROM public.products WHERE id = ${id}`;
-    // const product: Product = Object.assign({}, response.rows[0]); 
     const product: Product = JSON.parse(JSON.stringify(response.rows[0]));
     return product;
   } catch (error) {

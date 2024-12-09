@@ -13,7 +13,7 @@ export default function Home() {
         text={"Discover the secret to radiant skin with our luxurious range of cosmetic products! Crafted with love and the finest ingredients, our formulas are designed to enhance your natural beauty."} 
       />
       <div className="mx-auto max-w-2xl px-4 pb-16 sm:px-6 sm:pb-24 lg:max-w-7xl lg:px-8">
-        <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-6">Our newest products</h2>
+        <h2 className="text-center md:text-left text-2xl font-bold tracking-tight text-gray-900 mb-6">Our newest products</h2>
         <Suspense fallback={<ProductsSkeleton amount={8} />}>
           <ProductsList amount={8} />
         </Suspense>
