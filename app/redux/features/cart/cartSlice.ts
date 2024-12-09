@@ -18,11 +18,6 @@ export const cartSlice = createSlice({
     subtotal: 0
   },
   reducers: {
-    setCart: (state: CartProps, action: PayloadAction<Product[]>) => {
-      state.items = action.payload;
-      state.totalAmount = calculateTotalAmount(state);
-      state.subtotal = caclulateSubtotal(state);
-    },
     setModalVisibility: (state: CartProps, action: PayloadAction<boolean>) => {
       state.isOpen = action.payload;
     },
@@ -66,5 +61,5 @@ export const cartSlice = createSlice({
     }
   },
 });
-export const { setModalVisibility, addItem, changeQuantity, clearCart, setCart } = cartSlice.actions;
+export const { setModalVisibility, addItem, changeQuantity, clearCart } = cartSlice.actions;
 export default cartSlice.reducer;

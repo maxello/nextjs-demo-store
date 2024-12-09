@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { ShoppingBagIcon } from '@heroicons/react/24/outline';
 import ModalCart from '@/app/components/cart/CartModal';
 import { useAppDispatch, useAppSelector } from '@/app/redux/hooks';
-import { setCart, setModalVisibility } from '@/app/redux/features/cart/cartSlice';
+import { setModalVisibility } from '@/app/redux/features/cart/cartSlice';
 import { StateProps } from '@/app/lib/definitions';
 import { usePathname } from 'next/navigation';
 
@@ -20,11 +20,6 @@ export default function Cart() {
   useEffect(() => {
     cart?.isOpen && updateModalVisibility(false);
   }, [pathname]);
-
-  useEffect(() => {
-    const result = JSON.parse(localStorage.getItem("cart") || '[]');
-    dispatch(setCart(result));
-  }, []);
 
   const duration = 300;
   useEffect(

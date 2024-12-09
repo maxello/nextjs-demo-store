@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import { ShoppingCartIcon, CheckIcon } from "@heroicons/react/24/outline";
-import { QueryResultRow } from '@vercel/postgres';
 import { addItem } from '@/app/redux/features/cart/cartSlice';
 import { useAppDispatch } from '@/app/redux/hooks';
 import Button from '@/app/components/Button';

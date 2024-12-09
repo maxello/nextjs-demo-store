@@ -5,7 +5,7 @@ import NavLink from './NavLink';
 
 const navigation = [
   { name: 'Home', href: '/' },
-  { name: 'All Products', href: '/products' }
+  { name: 'Products', href: '/products' }
 ]
 
 export default function NavBar() {
