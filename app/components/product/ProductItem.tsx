@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import AddToCart from "@/app/components/cart/AddToCart";
 import { Product } from '@/app/lib/definitions';
-import { QueryResultRow } from '@vercel/postgres';
 
 export default function ProductItem({product}: {product: Product}) {
   return (
@@ -11,7 +10,7 @@ export default function ProductItem({product}: {product: Product}) {
       <Link href={`/products/${product.id}`} className="block overflow-hidden rounded-t-md border border-gray-200">
         <Image
           alt={product.title}
-          src={product.thumbnail}
+          src={product.images[0]}
           width={300}
           height={300}
           className="aspect-square w-full bg-gray-200 transition-transform duration-[2.5s] ease-linear lg:hover:scale-110 object-contain"

@@ -1,20 +1,17 @@
 import { sql } from "@vercel/postgres";
 import { Product } from "./definitions";
 
-export async function fetchProducts(limit?: number, offset?: number) {
+export async function fetchProducts(limit?: number) {
   try {
     // Artificially delay a response for demo purposes.
     // Don't do this in production :)
     // console.log('Fetching products data...');
     // await new Promise((resolve) => setTimeout(resolve, 3000));
 
-    const skip = offset || 0;
-
     const ProductResponsePromise = sql
       `SELECT *
         FROM public.products
         ORDER BY created_at DESC
-        OFFSET ${skip}
         LIMIT NULLIF(${limit}, 0)
       `
 
@@ -57,4 +54,31 @@ export async function fetchProductById(id: string) {
     throw new Error("Failed to fetch product data.");
   }
 }
+
+const ITEMS_PER_PAGE = 8;
+export async function fetchFilteredProducts(
+  query: string,
+  currentPage: number,
+) {
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+  try {
+    const productsResponse = await sql<Product>`
+    SELECT *
+    FROM products
+    WHERE title ILIKE ${`%${query}%`} OR brand ILIKE ${`%${query}%`}
+    ORDER BY created_at DESC
+    LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+    `;
+    // console.log("productsResponse", productsResponse.rows);
+    const products: Product[] = productsResponse.rows.map((row: any) => ({
+      ...row,
+      price: parseFloat(row.price)
+    }));
+    return products;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch invoices.');
+  }
+}
+
 
