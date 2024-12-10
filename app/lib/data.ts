@@ -65,7 +65,7 @@ export async function fetchFilteredProducts(
     const productsResponse = await sql<Product>`
     SELECT *
     FROM products
-    WHERE title ILIKE ${`%${query}%`} OR brand ILIKE ${`%${query}%`}
+    WHERE title ILIKE ${`%${query}%`} OR description ILIKE ${`%${query}%`}
     ORDER BY created_at DESC
     LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
@@ -77,7 +77,21 @@ export async function fetchFilteredProducts(
     return products;
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to fetch invoices.');
+    throw new Error('Failed to fetch products.');
+  }
+}
+export async function fetchProductsPages(query: string) {
+  try {
+    const count = await sql`SELECT COUNT(*)
+    FROM products
+    WHERE title ILIKE ${`%${query}%`} OR description ILIKE ${`%${query}%`}
+  `;
+    const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
+    console.log("totalPages", totalPages);
+    return totalPages;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total number of products.');
   }
 }
 

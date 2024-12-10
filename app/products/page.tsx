@@ -1,6 +1,8 @@
 import React, { Suspense } from 'react';
+import Pagination from '../components/Pagination';
 import ProductsList from '../components/product/ProductsList';
 import Search from '../components/Search';
+import { fetchProductsPages } from '../lib/data';
 import { ProductsSkeleton } from '../ui/skeletons';
 
 export default async function Products(props: {
@@ -12,6 +14,7 @@ export default async function Products(props: {
   const searchParams = await props.searchParams;
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
+  const totalPages = await fetchProductsPages(query);
   return (
     <div className="bg-white mt-6 lg:mt-12">
       <div className="mx-auto max-w-2xl px-4 pb-16 sm:px-6 sm:pb-24 lg:max-w-7xl lg:px-8">
@@ -20,7 +23,10 @@ export default async function Products(props: {
         <Suspense fallback={<ProductsSkeleton />}>
           <ProductsList query={query} currentPage={currentPage} />
         </Suspense>
+        <div className="mt-5 flex w-full justify-center">
+          <Pagination totalPages={totalPages} />
         </div>
+      </div>
     </div>
   )
 }
