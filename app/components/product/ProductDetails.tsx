@@ -8,7 +8,16 @@ export default async function ProductDetails({ id }: { id: string }): Promise<Re
   const product = await fetchProductById(id);
   return (
     <>
-      <Breadcrumbs title={product.title}/>
+      <Breadcrumbs breadcrumbs={[
+          { 
+            label: 'Products', 
+            href: '/products' 
+          },
+          {
+            label: product.title
+          },
+        ]} 
+      />
       <div className="grid grid-cols-1 md:grid-cols-2 md:gap-x-6 lg:gap-x-8">
         <div className="mb-6 md:mb-0">
           <ImageSlider images={product.images} title={product.title} />
