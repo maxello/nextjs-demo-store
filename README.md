@@ -1,7 +1,7 @@
 
-[Product Store Demo](nextjs-demo-shop-nine.vercel.app)
+[Product Store Demo](https://nextjs-demo-shop-nine.vercel.app)
 
-Developed an demo e-commerce product store using Next.js, Tailwind CSS, and deployed on Vercel for my portfolio. The application allows users to browse products, select specific items, and add them to their shopping cart. Key features include:
+Developed an e-commerce product store using Next.js, Tailwind CSS, and deployed on Vercel. The application allows users to browse products, select specific items, and add them to their shopping cart. Key features include:
 - **Product Selection**: Users can view detailed product information and choose items to add to their cart.
 - **Cart Management**: Users have the ability to modify the quantity of products in their cart, remove items, and view the total cost.
 - **Product Detail Page**: Each product has a dedicated page with comprehensive details and images.
