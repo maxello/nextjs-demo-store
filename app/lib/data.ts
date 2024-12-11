@@ -69,7 +69,6 @@ export async function fetchFilteredProducts(
     ORDER BY created_at DESC
     LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
-    // console.log("productsResponse", productsResponse.rows);
     const products: Product[] = productsResponse.rows.map((row: any) => ({
       ...row,
       price: parseFloat(row.price)
@@ -87,7 +86,6 @@ export async function fetchProductsPages(query: string) {
     WHERE title ILIKE ${`%${query}%`} OR description ILIKE ${`%${query}%`}
   `;
     const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
-    console.log("totalPages", totalPages);
     return totalPages;
   } catch (error) {
     console.error('Database Error:', error);

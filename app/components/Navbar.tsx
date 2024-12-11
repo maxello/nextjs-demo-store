@@ -1,5 +1,5 @@
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react';
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { Bars3Icon, XMarkIcon, GiftTopIcon } from '@heroicons/react/24/outline';
 import Cart from '@/app/components/cart';
 import NavLink from './NavLink';
 
@@ -22,12 +22,8 @@ export default function NavBar() {
             </DisclosureButton>
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-            <div className="flex shrink-0 items-center">
-              <img
-                alt="Your Company"
-                src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500"
-                className="h-8 w-auto"
-              />
+            <div className="flex shrink-0 items-center text-indigo-500">
+              <GiftTopIcon aria-hidden="true" className="size-9" />
             </div>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
@@ -47,6 +43,7 @@ export default function NavBar() {
         <div className="space-y-1 px-2 pb-3 pt-2">
           {navigation.map((item) => (
             <div key={item.name} className="flex flex-col text-center">
+              {/* <DisclosureButton>{item.name}</DisclosureButton> */}
               <NavLink link={item} />
             </div>
           ))}
