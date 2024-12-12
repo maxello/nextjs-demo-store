@@ -12,7 +12,7 @@ export default function AddToCart({product}: {product: Product}) {
   
   useEffect(
     () => {
-      let timer = setTimeout(() => setIsProductAdded(false), 1500);
+      const timer = setTimeout(() => setIsProductAdded(false), 1500);
       return () => {
         clearTimeout(timer);
       };

@@ -18,14 +18,14 @@ export default function Cart() {
   }
 
   useEffect(() => {
-    cart?.isOpen && updateModalVisibility(false);
+    return updateModalVisibility(false);
   }, [pathname]);
 
   const duration = 300;
   useEffect(
     () => {
       setIsProductAdded(true);
-      let timer = setTimeout(() => setIsProductAdded(false), duration);
+      const timer = setTimeout(() => setIsProductAdded(false), duration);
       return () => {
         clearTimeout(timer);
       };

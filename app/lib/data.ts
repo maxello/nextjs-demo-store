@@ -23,9 +23,8 @@ export async function fetchProducts(limit?: number) {
       totalProductsCountPromise
     ]);
 
-    const products: Product[] = data[0].rows.map((row: any) => ({
-      ...row,
-      price: parseFloat(row.price)
+    const products: Product[] = data[0].rows.map((row: Product) => ({
+      ...row
     }));
 
     return {
@@ -69,9 +68,8 @@ export async function fetchFilteredProducts(
     ORDER BY created_at DESC
     LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
-    const products: Product[] = productsResponse.rows.map((row: any) => ({
-      ...row,
-      price: parseFloat(row.price)
+    const products: Product[] = productsResponse.rows.map((row: Product) => ({
+      ...row
     }));
     return products;
   } catch (error) {

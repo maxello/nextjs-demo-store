@@ -2,12 +2,13 @@ import React from 'react';
 import { Product } from '@/app/lib/definitions';
 import Link from 'next/link';
 import { PlusIcon, MinusIcon } from "@heroicons/react/24/outline";
+import Image from 'next/image';
 
-export default function CartItem({item, onChangeQuantity}: {item: Product, onChangeQuantity: (arg0: 'minus' | 'plus', arg1: string) => any}) {
+export default function CartItem({item, onChangeQuantity}: {item: Product, onChangeQuantity: (arg0: 'minus' | 'plus', arg1: string) => void}) {
   return (
     <li className="flex py-6">
       <div className="size-24 shrink-0 overflow-hidden rounded-md border border-gray-200">
-        <img alt={item.title} src={item.thumbnail} className="size-full object-cover" />
+        <Image width={100} height={100} alt={item.title} src={item.thumbnail} className="size-full object-cover" />
       </div>
 
       <div className="ml-4 flex flex-1 flex-col">
