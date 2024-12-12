@@ -8,29 +8,17 @@ export async function fetchProducts(limit?: number) {
     // console.log('Fetching products data...');
     // await new Promise((resolve) => setTimeout(resolve, 3000));
 
-    const ProductResponsePromise = sql
+    const productResponse = await sql
       `SELECT *
         FROM public.products
         ORDER BY created_at DESC
         LIMIT NULLIF(${limit}, 0)
       `
 
-    const totalProductsCountPromise = sql
-      `SELECT COUNT(*) as total_count FROM public.products`
-
-    const data = await Promise.all([
-      ProductResponsePromise,
-      totalProductsCountPromise
-    ]);
-
-    const products: Product[] = data[0].rows.map((row: Product) => ({
-      ...row
-    }));
-
-    return {
-      products,
-      total_count: parseInt(data[1].rows[0].total_count)
-    }
+      const products: Product[] = productResponse.rows.map((row: any) => ({
+        ...row
+      }));
+    return products;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch products data.");
@@ -68,7 +56,7 @@ export async function fetchFilteredProducts(
     ORDER BY created_at DESC
     LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
-    const products: Product[] = productsResponse.rows.map((row: Product) => ({
+    const products: Product[] = productsResponse.rows.map((row: any) => ({
       ...row
     }));
     return products;
