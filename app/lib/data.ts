@@ -8,17 +8,13 @@ export async function fetchProducts(limit?: number) {
     // console.log('Fetching products data...');
     // await new Promise((resolve) => setTimeout(resolve, 3000));
 
-    const productResponse = await sql
-      `SELECT *
+    const productResponse = await sql<Product>`
+        SELECT *
         FROM public.products
         ORDER BY created_at DESC
         LIMIT NULLIF(${limit}, 0)
       `
-
-      const products: Product[] = productResponse.rows.map((row: any) => ({
-        ...row
-      }));
-    return products;
+    return productResponse.rows;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch products data.");
@@ -32,7 +28,7 @@ export async function fetchProductById(id: string) {
     // console.log('Fetching product data by ID......');
     // await new Promise((resolve) => setTimeout(resolve, 3000));
 
-    const response = await sql
+    const response = await sql<Product>
     `SELECT * FROM public.products WHERE id = ${id}`;
     const product: Product = JSON.parse(JSON.stringify(response.rows[0]));
     return product;
@@ -56,10 +52,7 @@ export async function fetchFilteredProducts(
     ORDER BY created_at DESC
     LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
-    const products: Product[] = productsResponse.rows.map((row: any) => ({
-      ...row
-    }));
-    return products;
+    return productsResponse.rows;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch products.');
