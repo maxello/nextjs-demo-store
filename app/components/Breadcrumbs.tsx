@@ -16,7 +16,7 @@ export default function Breadcrumbs({
       {breadcrumbs.map((item, ind) => (
         <div key={item.label} className="flex">
           {item.href ? (
-            <Link href={"/products"} className="hover:underline hover:text-gray-600">Products</Link>
+            <Link href={item.href} className="hover:underline hover:text-gray-600">{item.label}</Link>
           ) : (
             <span>{item.label}</span>
           )}
